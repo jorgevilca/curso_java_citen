@@ -1,0 +1,79 @@
+--- sp insertar empleado--
+
+create or replace procedure USP_EMPLEADO_INSERT
+(p_idemp IN CHAR,
+p_nom IN VARCHAR2,
+p_ape IN VARCHAR2,
+p_correo IN VARCHAR2,
+p_user IN VARCHAR2,
+p_pass IN VARCHAR2)
+is
+begin
+insert into empleados
+ values(p_idemp,p_nom,p_ape,p_correo,p_user,p_pass);
+end usp_empleado_insert;
+   
+
+--prueba--
+
+begin
+usp_empleado_insert('E0006','Julio','Flores','jflores@hotmail.com','jflores','lobito');
+end;
+
+--sp actualiza empleado--
+
+create or replace procedure usp_empleado_modificar
+(p_idemp IN CHAR,
+p_nom IN VARCHAR2,
+p_ape IN VARCHAR2,
+p_correo IN VARCHAR2,
+p_user IN VARCHAR2,
+p_pass IN VARCHAR2)
+is
+begin
+update empleados set nombre=p_nom,apellidos=p_ape,email=p_correo,usuario=p_user,clave=p_pass
+where idempleado=p_idemp;
+end usp_empleado_modificar;
+
+--prueba--
+
+begin
+usp_empleado_modificar('E0007','Manuel','Martinez','manuel@gmail.com','manuelito','angelito');
+end;
+
+--sp eliminar--
+
+create or replace procedure usp_empleado_eliminar
+(p_idemp IN CHAR
+)
+is
+begin
+delete from empleados where idempleado=p_idemp;
+end usp_empleado_eliminar;
+
+-- prueba--
+
+begin
+usp_empleado_eliminar('E0006');
+end;
+
+--sp con parametro de salida--
+
+create or replace procedure USP_EMPLEADO_INSERTA
+(p_idemp OUT CHAR,
+p_nom IN VARCHAR2,
+p_ape IN VARCHAR2,
+p_correo IN VARCHAR2,
+p_user IN VARCHAR2,
+p_pass IN VARCHAR2)
+is
+begin
+Select valor into p_idemp from Control where parametro='Empleados';
+update Control set Valor=valor+1 where parametro='Empleados';
+insert into empleados
+ values(p_idemp,p_nom,p_ape,p_correo,p_user,p_pass);
+end usp_empleado_inserta;
+
+--prueba--
+
+
